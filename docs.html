@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Firebase Storage App</title>
+  <link rel="stylesheet" href="css/estilo.css">
+
+</head>
+<body>
+
+    <h1>Bem-vindo </h1>
+
+    <div id="dadosUser"> </div>
+    
+    <a href="index.html">Logout</a>  
+  
+    <h1>Enviar Arquivo</h1>
+
+    <form id="fileForm">
+        <input type="file" id="fileInput">
+        <button type="button" onclick="uploadFile()">Enviar</button>
+    </form>
+
+     <div id="fileList"></div>
+
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase.js"></script>
+  <script src="js/fbconfig.js" ></script> 
+  <script src="js/app.js"></script>
+</body>
+</html>
+

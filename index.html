@@ -1,0 +1,32 @@
+
+<!-- login.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Firebase Login</title>
+  <link rel="stylesheet" href="css/estilo.css">
+</head>
+<body>
+
+  <div class="login-container">
+    <h1>Carregar Arquivos</h1>
+
+    <form id="loginForm">
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required>
+
+      <label for="password">Senha:</label>
+      <input type="password" id="password" name="password" required>
+
+      <button type="button" class="login-button" onclick="loginWithEmail()">Login Email/Senha</button>
+      <button type="button" class="google-login-button" onclick="loginWithGoogle()"> Login Google</button>
+    </form>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase.js"></script>
+  <script src="js/fbconfig.js" ></script> 
+  <script src="js/login.js"></script>
+</body>
+</html>

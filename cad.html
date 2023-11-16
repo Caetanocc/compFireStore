@@ -1,0 +1,39 @@
+<!-- Página de cadastro -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/estilo.css">
+  <title>Cadastro de Usuário</title>
+</head>
+<body>
+  <h1>Cadastro de Usuário</h1>
+  <form id="registerForm">
+    <label for="displayName">Nome:</label>
+    <input type="text" id="displayName" name="displayName" required>
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required>
+
+    <label for="password">Senha:</label>
+    <input type="password" id="password" name="password" required>
+
+    <label for="idPerfil">ID Perfil:</label>
+    <select id="idPerfil" name="idPerfil">
+      <option value="1">Aluno </option>
+      <option value="2">Professor </option>
+      <option value="3">Coordenador</option>
+      <option value="4">Diretor</option>
+      <!-- Adicione mais opções conforme necessário -->
+    </select>
+
+    <button type="button" onclick="registerUser()">Cadastrar</button>
+  </form>
+
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase.js"></script>
+  <script src="js/fbconfig.js" ></script> 
+  <!-- Adicione a lógica de cadastro -->
+  <script src="js/register.js"></script>
+</body>
+</html>
