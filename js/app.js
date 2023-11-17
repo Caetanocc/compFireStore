@@ -2,18 +2,27 @@
 // Função para enviar arquivo para o Firebase Storage
 function uploadFile() {
   var fileInput = document.getElementById('fileInput');
+
+  let categoria = document.getElementsByName('categoria');
+
+  categoria = 'cinema'
+
+  console.log(categoria)
+
   var file = fileInput.files[0];
 
   if (file) {
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
-        var storageRef = storage.ref('users/' + user.uid + '/files/' + file.name);
+        var storageRef = storage.ref('users/'+ categoria + '/' + user.uid + '/files/' + file.name);
         var task = storageRef.put(file);
 
         task.then(snapshot => {
           console.log('Arquivo enviado com sucesso!');
           fileInput.value = ''; // Limpar o input de arquivo
           updateFileCount(user.uid, +1) // atualizar qtde de arquivos.
+
+          
           displayFiles(); // Atualizar a lista de arquivos
         }).catch(error => {
           console.error('Erro no envio do arquivo:', error);
@@ -105,11 +114,19 @@ function displayFiles1() {
 // Função para recuperar arquivos do Firebase Storage
 function displayFiles() {
   var fileList = document.getElementById('fileList');
+
   fileList.innerHTML = ''; // Limpar a lista de arquivos
+
+  categ = ['games', 'cinema', 'musica']
 
   firebase.auth().onAuthStateChanged(user => {
     if (user) {
-      displayFiles1User(user)
+
+      categ.forEach(item => {
+        displayFiles1User(user, item)
+      })
+      
+      
     } else {
       console.error('Usuário não autenticado.');
     }
@@ -117,8 +134,8 @@ function displayFiles() {
 }
 
 
-function displayFiles1User(user){
-  var filesRef = storage.ref('users/' + user.uid + '/files');
+function displayFiles1User(user, categoria){
+  var filesRef = storage.ref('users/' +categoria +'/' + user.uid + '/files');
   filesRef.listAll().then(result => {
     result.items.forEach(item => {
       item.getDownloadURL().then(url => {

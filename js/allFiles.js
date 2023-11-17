@@ -55,15 +55,27 @@ function displayFiles1User(userId){
 
           // Adicione o botão de remoção
           var removeButton = document.createElement('button');
-          removeButton.textContent = 'Remover';
+          removeButton.textContent = 'Curtir';
           removeButton.addEventListener('click', function() {
-            removeFile(user.uid, item.name);
+            curtirFile(userId, metadata.uid);
           });
           fileContainer.appendChild(removeButton);
+          
+          var curtida = firebase.database().ref('userFiles/' + userId + '/' + metadata.uid);
+          let totcurts = 0
+
+          curtida.once('value').then(snapshot => {
+            snapshot.forEach(userSnapshot => {
+              totcurts = snapshot.val() || 0; })
+            })
+
+
 
           // Adicione o nome do arquivo abaixo da miniatura ou link
           var fileNameElement = document.createElement('p');
-          fileNameElement.textContent = metadata.name;
+          fileNameElement.textContent = metadata.name + ' ' + totcurts;
+
+          console.log(totcurts)
 
           fileList.appendChild(fileContainer);
         });
@@ -76,6 +88,29 @@ function displayFiles1User(userId){
   });
 }
 
+
+// Função para remover um arquivo do Firebase Storage
+function curtirFile(userId, fileName) {
+
+  var userTotalsRef = firebase.database().ref('userFiles/' + userId + '/' + fileName);
+
+  // Recupera o valor atual do total de arquivos
+  userTotalsRef.once('value').then(snapshot => {
+    var currentCount = snapshot.val() || 0;
+
+    // Incrementa o total de arquivos
+    var newCount = currentCount + 1;
+
+    // Atualiza o valor na Realtime Database
+    userTotalsRef.set(newCount).then(() => {
+      console.log('Total de arquivos atualizado com sucesso.');
+    }).catch(error => {
+      console.error('Erro ao atualizar total de arquivos:', error);
+    });
+  }).catch(error => {
+    console.error('Erro ao recuperar total de arquivos:', error);
+  });
+}
 
 
 // Chamar a função de exibição ao carregar a página
