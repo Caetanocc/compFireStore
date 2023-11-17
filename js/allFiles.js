@@ -37,6 +37,8 @@ function displayFiles1User(userId){
           var fileContainer = document.createElement('div');
           fileContainer.classList.add('file-container'); // Adicionar a classe
 
+          console.log(metadata)
+
           if ( item.name.toLowerCase().endsWith('.jpg') || item.name.toLowerCase().endsWith('.jpeg') 
             || item.name.toLowerCase().endsWith('.png') || item.name.toLowerCase().endsWith('.gif')) {
             // Se for uma imagem, exibir miniatura
@@ -57,19 +59,14 @@ function displayFiles1User(userId){
           var removeButton = document.createElement('button');
           removeButton.textContent = 'Curtir';
           removeButton.addEventListener('click', function() {
-            curtirFile(userId, metadata.uid);
+            curtirFile(userId,metadata.md5Hash);
           });
           fileContainer.appendChild(removeButton);
           
-          var curtida = firebase.database().ref('userFiles/' + userId + '/' + metadata.uid);
+          var curtida = firebase.database().ref('userFiles/' + userId + '/' + metadata.md5Hash);
           let totcurts = 0
 
-          curtida.once('value').then(snapshot => {
-            snapshot.forEach(userSnapshot => {
-              totcurts = snapshot.val() || 0; })
-            })
-
-
+          curtida.once('value').then(snapshot => { totcurts = snapshot.val() || 0; })
 
           // Adicione o nome do arquivo abaixo da miniatura ou link
           var fileNameElement = document.createElement('p');
